@@ -1,6 +1,5 @@
-// Note: Arrays need to be 2D for this to work. Also this works through id's being co-ordinates
 
-//const data = require('./data.js');
+import data from './data.js';
 
 
 /*-------------- Constants -------------*/
@@ -21,7 +20,9 @@ let losingScoreCounter = 0;
 
 const difficultyBtns = document.querySelectorAll('.difficultyBtn');
 
-const cells = document.querySelectorAll('.square');
+const squares = document.querySelectorAll('.square');
+
+const cells = document.querySelectorAll('.cell');
 
 const numberSelection = document.querySelectorAll('.numberSelection');
 
@@ -39,12 +40,28 @@ const losingScore = document.querySelector('.losingScore');
 // render function
 /*
     -Function invoked at (difficultySetting) function.
-    -Radomizer to choose winning combinations from the data.js.
-    -Calls the (randomDifficultySelector) and passes a param depending on the size of the array.
-    -Array assigned to (inGameBoardNumbers) and (winningCombination) using the MAP property.
-    -Render to the DOM.
 */
 
+function render() {
+    
+    let boardSelectedNum = randomDifficultySelector(1,3);
+    winningCombinations.push(data[boardSelectedNum]);
+      
+    winningCombinations[0].forEach((square) => {
+        square.forEach((num) => {
+            inGameBoardNumbers.push(num);
+        })
+    })   
+
+    cells.forEach((cell,index) => {
+        cell.innerHTML = inGameBoardNumbers[index];
+    })        
+}
+
+render();
+
+// console.log(winningCombinations);
+// console.log(inGameBoardNumbers);
 
 // init function
 
@@ -65,6 +82,9 @@ function init(intialize) {
     -Function with 2 param min integer and max integer.
     -Returns random value between the 2 integers
 */
+function randomDifficultySelector(minNum,maxNum) {
+    return Math.round(Math.random() * (maxNum-minNum) + minNum);
+}
 
 // difficultySetting function
 
@@ -111,7 +131,8 @@ function difficultySetting(btn) {
     -Parameter assigned to (gridPosition) at the global scope.
 */
 
-function selectedGridPosition(cellSpace) {
+function selectedGridPosition(square) {
+    console.log(square.target.className)
 
 }
 
@@ -190,9 +211,9 @@ difficultyBtns.forEach((btn) => {
     });
 });
 
-cells.forEach((cellSpace) => {
+squares.forEach((square) => {
 
-    cellSpace.addEventListener('click', selectedGridPosition);
+    square.addEventListener('click', selectedGridPosition);
 });
 
 numberSelection.forEach((num => {

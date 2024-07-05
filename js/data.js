@@ -33,4 +33,4 @@ const data= [
         [7, 9, 6, 3, 1, 8, 4, 5, 2]
     ]
 ]
-module.exports = data;
+export default data;
