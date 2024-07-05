@@ -1,6 +1,5 @@
 // Note: Arrays need to be 2D for this to work. Also this works through id's being co-ordinates
 
-
 /*-------------- Constants -------------*/
 
 // The winning board array. (winningCombinations)
@@ -30,14 +29,12 @@
 /*
     -Variable set when function gridSelected is invoked.
 */
-
 // Losing Score counter (losingScoreCounter)
 
 /*
     -Set to 0.
     -Increments by 1 on mistakes made.
 */
-
 
 /*----- Cached Element References  -----*/
 
@@ -47,11 +44,13 @@
     -It will query the class name of the specific button using the query selector and will be assigned a constant.
 */
 
+
 // Query selector for a specific grid (gridSelection)
 
 /*
     -It will query the class name of the specific grid using the query selector all and will be assigned a constant.
 */
+
 
 // Query selector for the number buttons(numberSelection)
 
@@ -59,23 +58,28 @@
     -It will query the class name of the specific number button using the query selector all and will be assigned a constant.
 */
 
+
 // Query selector for the undo button (undoBtn)
 
 /*
     -It will query the class name of the undo button using the query selector and will be assigned a constant.
 */
 
+
 // Query selector for the reset button (resetBtn)
 
 /*
     -It will query the class name of the reset button using the query selector and will be assigned a constant.
 */
+ 
 
 // Query selector for the message text (messageText)
 
 /*
     -It will query the class name of the message text using the query selector and will be assigned a constant.
 */
+
+
 
 // Query selector for the losing text (losingScore)
 
@@ -94,6 +98,7 @@
     -Array assigned to (inGameBoardNumbers) and (winningCombination) using the MAP property.
     -Render to the DOM.
 */
+
 
 // init function
 

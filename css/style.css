@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+  }
+
+body {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/*Section division to 3 equal widths */
+.parentContainerSec {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 30vw;
+    justify-content: center;
+}
+
+/* Board */
+.sudokuBoard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 40vw;
+
+}
+
+.square {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: lightsteelblue;
+    justify-content: center;
+    aspect-ratio: 1/1;
+    border: 2px solid black;
+
+}
+
+/* Cells */
+.gridSelection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid grey;
+    font-size: 1.8rem;
+    width: 33.33%;
+}
