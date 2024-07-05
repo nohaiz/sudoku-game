@@ -1,91 +1,37 @@
 // Note: Arrays need to be 2D for this to work. Also this works through id's being co-ordinates
 
+//const data = require('./data.js');
+
+
 /*-------------- Constants -------------*/
 
-// The winning board array. (winningCombinations)
+const winningCombinations = [];
 
-/*
-    - This array contains predefined winning combinations for the game.
-    - The data.js file will contain a number of random winning combination. That will be selected at random and is assigned to the winning board array.
-*/
+const inGameBoardNumbers = [];
 
-// The in game board number array. (inGameBoardNumbers)
-
-/*
-    -Sets the numbers on the board.
-    -Stores new numbers based on their on the board. 
-*/
-
-// Last grid position selected (lastGridPosition)
-
-/*
-    -An undefined array
-*/
+const lastGridPosition = [];
 
 /*---------- Variables (state) ---------*/
 
-// Grid position variable. (gridPosition)
+let gridPosition;
 
-/*
-    -Variable set when function gridSelected is invoked.
-*/
-// Losing Score counter (losingScoreCounter)
-
-/*
-    -Set to 0.
-    -Increments by 1 on mistakes made.
-*/
+let losingScoreCounter = 0;
 
 /*----- Cached Element References  -----*/
 
-// Query selector for the difficulty buttons. (difficultyBtn)
+const difficultyBtns = document.querySelectorAll('.difficultyBtn');
 
-/* 
-    -It will query the class name of the specific button using the query selector and will be assigned a constant.
-*/
+const cells = document.querySelectorAll('.square');
 
+const numberSelection = document.querySelectorAll('.numberSelection');
 
-// Query selector for a specific grid (gridSelection)
+const undoBtn = document.querySelector('.undoBtn');
 
-/*
-    -It will query the class name of the specific grid using the query selector all and will be assigned a constant.
-*/
+const resetBtn = document.querySelector('.resetBtn');
 
+const messageText = document.querySelector('.messageText');
 
-// Query selector for the number buttons(numberSelection)
-
-/*
-    -It will query the class name of the specific number button using the query selector all and will be assigned a constant.
-*/
-
-
-// Query selector for the undo button (undoBtn)
-
-/*
-    -It will query the class name of the undo button using the query selector and will be assigned a constant.
-*/
-
-
-// Query selector for the reset button (resetBtn)
-
-/*
-    -It will query the class name of the reset button using the query selector and will be assigned a constant.
-*/
- 
-
-// Query selector for the message text (messageText)
-
-/*
-    -It will query the class name of the message text using the query selector and will be assigned a constant.
-*/
-
-
-
-// Query selector for the losing text (losingScore)
-
-/*
-    -It will query the class name of the message text using the query selector and will be assigned a constant.
-*/
+const losingScore = document.querySelector('.losingScore');
 
 /*-------------- Functions -------------*/
 
@@ -105,9 +51,13 @@
 /*
     -Invoked when the (resetBtn) is clicked.
     -Variable states set either empty or 0.
-    -Cached Element References (gridSelection,messageText,losingScore) set to default.
+    -Cached Element References (cells,messageText,losingScore) set to default.
     -Buttons need to be enabled.
 */
+
+function init(intialize) {
+
+}
 
 // randomDifficultySelector function 
 
@@ -148,14 +98,22 @@
     -Render function invoked;
 */
 
+function difficultySetting(btn) {
+
+}
+
 // selectedGridPosition function
 
 /*
-    -Function will invoke through (gridSelection) event listener.
+    -Function will invoke through (cells) event listener.
     -Parameter passed.
     -Parameter used to get assigned Id.
     -Parameter assigned to (gridPosition) at the global scope.
 */
+
+function selectedGridPosition(cellSpace) {
+
+}
 
 // Assigning numbers on the board function. (numberAssignment)
 
@@ -175,6 +133,10 @@
            
 */
 
+function numberAssignment(num) {
+
+}
+
 // undoNumberAssignment function
 
 /*
@@ -186,6 +148,10 @@
   -unshift (lastGridPosition) at the first element.
 
 */
+
+function undoNumberAssignment(undoInput) {
+
+}
 
 // Winning on completion function (winningOnCompletion)
 
@@ -217,35 +183,30 @@
 
 /*----------- Event Listeners ----------*/
 
-// Add event listener to the difficulty buttons.(difficultyBtn) 
+difficultyBtns.forEach((btn) => {
 
-/*
-    -Invokes (difficultySetting).
-    -Pass Parameters.
-*/
+    btn.addEventListener('click', () => {
+        difficultySetting(btn);
+    });
+});
 
-// Event listener for the grid (gridSelection)
+cells.forEach((cellSpace) => {
 
-/*
-    -Invokes (selectedGridPosition).
-    -Pass Parameters
-*/
+    cellSpace.addEventListener('click', selectedGridPosition);
+});
 
-// Event listener for the (numberSelection)
+numberSelection.forEach((num => {
 
-/*
-    -Invokes (numberAssignment)
-    -Pass Parameters
-*/
+    num.addEventListener('click', () => {
+        numberAssignment(num);
+    })
+}));
 
-// Event listener for the (undoBtn) 
+undoBtn.addEventListener('click', (undoInput) => {
+    undoNumberAssignment(undoInput);
+});
 
-/*
-    -Invokes (undoNumberAssignment)
-*/
-
-// Event listener for the (resetBtn) 
-/*
-    -Invokes (init)
-*/
+resetBtn.addEventListener('click', (intialize)=> {
+    init(intialize);
+});
  
