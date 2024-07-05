@@ -36,32 +36,12 @@ const losingScore = document.querySelector('.losingScore');
 
 /*-------------- Functions -------------*/
 
-
-// render function
-/*
-    -Function invoked at (difficultySetting) function.
-*/
-
 function render() {
-    
-    let boardSelectedNum = randomDifficultySelector(1,3);
-    winningCombinations.push(data[boardSelectedNum]);
-      
-    winningCombinations[0].forEach((square) => {
-        square.forEach((num) => {
-            inGameBoardNumbers.push(num);
-        })
-    })   
 
     cells.forEach((cell,index) => {
         cell.innerHTML = inGameBoardNumbers[index];
     })        
 }
-
-render();
-
-// console.log(winningCombinations);
-// console.log(inGameBoardNumbers);
 
 // init function
 
@@ -76,50 +56,46 @@ function init(intialize) {
 
 }
 
-// randomDifficultySelector function 
-
-/*
-    -Function with 2 param min integer and max integer.
-    -Returns random value between the 2 integers
-*/
 function randomDifficultySelector(minNum,maxNum) {
     return Math.round(Math.random() * (maxNum-minNum) + minNum);
 }
 
-// difficultySetting function
 
-/*
-    -Function will invoke through (difficultySetting) event listener.
-    -Parameter passed.
-    -Declaring randomNumber
-    -Declaring randomIdexRow and randomIdexRow (for my info: 0-81)
-    IF the parameter is easy 
-        //THEN invokes (randomDifficultySelector) between 1 and 30 which are param and stores in (randomNumer).
-                -FOR loop is used to itterate the number of times it needs to remove from (inGameBoardNumbers). 
-                    -Invokes (randomDifficultySelector) between 0 and 81 which are param and stored in (randomIdexRow).
-                    -Invokes (randomDifficultySelector) between 0 and 81 which are param and stored in (randomIdexCol).
-                    -(inGameBoardNumbers) array now assigns empty string depending on the co-ordinate.
-                -(messageText) should say easy was selected
-    ELSE IF medium
-        //THEN invokes (randomDifficultySelector) between 30 and 55 which are param and stores in (randomNumer).
-                -FOR loop is used to itterate the number of times it needs to remove from (inGameBoardNumbers). 
-                    -Invokes (randomDifficultySelector) between 0 and 81 which are param and stored in (randomIdexRow).
-                    -Invokes (randomDifficultySelector) between 0 and 81 which are param and stored in (randomIdexCol).
-                    -(inGameBoardNumbers) array now assigns empty string depending on the co-ordinate.
-                -(messageText) should say medium was selected
-    ELSE IF hard
-        //THEN invokes (randomDifficultySelector) between 55 and 65 which are param and stores in (randomNumer).
-                -FOR loop is used to itterate the number of times it needs to remove from (inGameBoardNumbers). 
-                    -Invokes (randomDifficultySelector) between 0 and 81 which are param and stored in (randomIdexRow).
-                    -Invokes (randomDifficultySelector) between 0 and 81 which are param and stored in (randomIdexCol).
-                    -(inGameBoardNumbers) array now assigns empty string depending on the co-ordinate.
-                -(messageText) should say medium was selected
-    -difficulty buttons are disabled.
-    -Render function invoked;
-*/
+function boardSetting(randomNumberOfTimes) {
+    
+    for (let i=0; i <= randomNumberOfTimes; i++) {
+        let randomCell = randomDifficultySelector(0,81);
+        inGameBoardNumbers[randomCell] = '';
+    }
+}
 
 function difficultySetting(btn) {
+     
+    let boardSelectedNum = randomDifficultySelector(1,3);
+    winningCombinations.push(data[boardSelectedNum]);
+    
+    //Ask dennis
+    winningCombinations[0].forEach((square) => {
+        square.forEach((num) => {
+            inGameBoardNumbers.push(num);
+        })
+    })
 
+    if (btn.textContent === 'Easy') {
+        boardSetting(randomDifficultySelector(20,40));
+    }
+    else if (btn.textContent === 'Medium') {
+        boardSetting(randomDifficultySelector(40,60));
+    }
+    else if (btn.textContent === 'Difficult') {
+        boardSetting(randomDifficultySelector(60,75));
+    }
+
+    //Add message text
+    difficultyBtns.forEach((btn) => {
+        btn.disabled = true;
+    })
+    render();
 }
 
 // selectedGridPosition function
@@ -155,7 +131,7 @@ function selectedGridPosition(square) {
 */
 
 function numberAssignment(num) {
-
+    console.log(num.innerHTML)
 }
 
 // undoNumberAssignment function
