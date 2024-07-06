@@ -32,7 +32,7 @@ body {
     justify-content: center;
     aspect-ratio: 1/1;
     border: 2px solid black;
-    width: 12vw;
+    width: 11vw;
 }
 
 /* Cells */
@@ -43,8 +43,43 @@ body {
     border: 1px solid grey;
     font-size: 1.8rem;
     width: 33.33%;
+    height: 33.33%;
 }
 
 button {
-    font-size: 1.6rem;
+    margin-top: 5%;
+    font-size: 1rem;
+    color: cadetblue;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: lightsteelblue;
+}
+
+p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.3rem;
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    justify-content: space-evenly;
+
+}
+
+li {
+    font-family: 'Times New Roman', Times, serif;
+    list-style: none;
+}
+
+.cell.wrongNum {
+    color: red;
+    background-color: rgb(120, 150, 189);
 }

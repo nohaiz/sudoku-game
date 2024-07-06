@@ -16,23 +16,19 @@ let numBtnSelected = '';
 
 let losingScoreCounter = 0;
 
-
-
 /*----- Cached Element References  -----*/
 
 const difficultyBtns = document.querySelectorAll('.difficultyBtn');
-
-// const squares = document.querySelectorAll('.square');
 
 const cells = document.querySelectorAll('.cell');
 
 const numberSelections = document.querySelectorAll('.numberSelection');
 
+const messageText = document.querySelector('.messageText');
+
 const undoBtn = document.querySelector('.undoBtn');
 
 const resetBtn = document.querySelector('.resetBtn');
-
-const messageText = document.querySelector('.messageText');
 
 const losingScore = document.querySelector('.losingScore');
 
@@ -50,8 +46,8 @@ function render() {
     else {
         cells.forEach((cell,index) => {
             cell.innerHTML = inGameBoardNumbers[index];
-        })     
-    }
+        });  
+    } 
 }
 
 // init function
@@ -59,7 +55,7 @@ function render() {
 /*
     -Invoked when the (resetBtn) is clicked.
     -Variable states set either empty or 0.
-    -Cached Element References (cells,messageText,losingScore) set to default.
+    -Cached Element References (cells,timer,losingScore) set to default.
     -Buttons need to be enabled.
 */
 
@@ -106,14 +102,15 @@ function difficultySetting(btn) {
     difficultyBtns.forEach((btn) => {
         btn.disabled = true;
     })
+    numberSelections.forEach((numBtn) => {
+        numBtn.disabled = false;
+    })
     render();
 }
-
 
 // Assigning numbers on the board function. (numberAssignment)
 
 /*
-            -Invoke (losingScoreFn) and pass the parameters (indexRow) and (indexCol).
             -Calls (winningOnCompletion) function.
     ELSE   
         //THEN **Additional feature I might add is to hightlight the surrounding squares parallel to eachother**
@@ -151,7 +148,7 @@ function gridSelection(cellNum, cellId) {
 /*
     -Using the SOME property for array iterrations to check for an empty string or value.
     -IF inGameBoardNumbers has nothing empty 
-        //THEN the game is won is displayed in the (messageText) or anywhere not decided yet.
+        //THEN the game is won is displayed in the (timer) or anywhere not decided yet.
             -Add disable property to all the buttons for the (numberSelection) and (undoBtn)
 
 */
@@ -165,9 +162,9 @@ function gridSelection(cellNum, cellId) {
                 -Update (losingScore) to the DOM.
                 -Disable property to all the buttons for the (numberSelection)
                 -(gridPosition) pushed in (lastGridPosition) used for the undo function
-                -(messageText) needs to say wrong answer please undo and u have this many tried left (losingScoreCounter)
+                -(timer) needs to say wrong answer please undo and u have this many tried left (losingScoreCounter)
                     //IF (losingScoreCounter) equals to 3 
-                        //THEN game over is displayed in (messageText) 
+                        //THEN game over is displayed in (timer) 
                             -Disable property to all the buttons for the (numberSelection) and (undoBtn)
 
 */
@@ -176,12 +173,12 @@ function losingScoreFn (cellId) {
 
     if (winningCombinations[int] !== inGameBoardNumbers[int]) {
         losingScoreCounter++;
-        numberSelections.forEach((num) => {
-            num.disabled = true;
-        })
+        losingScore.innerHTML = `Mistakes: ${losingScoreCounter}/3`;
+        cells[int].classList.add('wrongNum'); 
     }
     if (losingScoreCounter === 3) {
         render();
+        // timer.innerHTML = 
     }
 }
 
@@ -197,15 +194,11 @@ function losingScoreFn (cellId) {
 
 */
 
-function undoNumberAssignment(undoInput) {
-    console.log(lastGridPosition);
-    console.log(inGameBoardNumbers)
+function undoNumberAssignment() {
     inGameBoardNumbers[parseInt(lastGridPosition[lastGridPosition.length - 1])] = '';
-    console.log(inGameBoardNumbers)
+    cells[parseInt(lastGridPosition[lastGridPosition.length - 1])].classList.remove('wrongNum'); 
     render();
-    numberSelections.forEach((num) => {
-        num.disabled = false;
-    })}
+}
 
 /*----------- Event Listeners ----------*/
 

@@ -11,14 +11,14 @@
 <body>
     <section>
         <div class="parentContainerSec">
-            <p>Select a difficulty to start the game:</p>
-            <p class="messageText">State of the game:</p>
+            <h2>Select your preferred difficulty level:</h2>
+            <p class="messageText">Complete the board to win!!!</p>
             <div class="difficultySelector">
                 <button class="difficultyBtn">Easy</button>
                 <button class="difficultyBtn">Medium</button>
                 <button class="difficultyBtn">Difficult</button>
             </div>
-            <p class="losingScore">Mistakes:</p>
+            <p class="losingScore">Mistakes: 0/3</p>
             <button class="resetBtn">Reset</button>
         </div>
     </section>
@@ -127,27 +127,27 @@
                 </div>
             </div>
             
-            <div>
-                <button class="numberSelection">1</button>
-                <button class="numberSelection">2</button>
-                <button class="numberSelection">3</button>
-                <button class="numberSelection">4</button>
-                <button class="numberSelection">5</button>
-                <button class="numberSelection">6</button>
-                <button class="numberSelection">7</button>
-                <button class="numberSelection">8</button>
-                <button class="numberSelection">9</button>
+            <div class="btnsUnderBoard">
+                <button class="numberSelection" disabled>1</button>
+                <button class="numberSelection" disabled>2</button>
+                <button class="numberSelection" disabled>3</button>
+                <button class="numberSelection" disabled>4</button>
+                <button class="numberSelection" disabled>5</button>
+                <button class="numberSelection" disabled>6</button>
+                <button class="numberSelection" disabled>7</button>
+                <button class="numberSelection" disabled>8</button>
+                <button class="numberSelection" disabled>9</button>
                 <button class="undoBtn">Undo</button>
             </div>
         </div>        
     </section>
     <section>
         <div class="parentContainerSec">
-        <p>Instructions</p>
+        <h2>Instructions</h2>
         <ul>
-            <li>Click to choose difficulty.</li>
+            <li>Select a difficulty to start the game</li>
             <li>Fill the grid with numbers 1-9 in every row, column, and 3x3 section.</li>
-            <li>Select a cell, then click numbers 1-9 below to fill it.</li>
+            <li>Select a number, then click cell 1-9 below to fill it.</li>
             <li>Use undo to erase.</li>
             <li>If you enter an incorrect number 3 times, the game ends.</li>
             <li>Click reset to start over after the game ends.</li>
