@@ -16,6 +16,8 @@ let numBtnSelected = '';
 
 let losingScoreCounter = 0;
 
+
+
 /*----- Cached Element References  -----*/
 
 const difficultyBtns = document.querySelectorAll('.difficultyBtn');
@@ -38,9 +40,18 @@ const losingScore = document.querySelector('.losingScore');
 
 function render() {
 
-    cells.forEach((cell,index) => {
-        cell.innerHTML = inGameBoardNumbers[index];
-    })        
+    let counter = 0;
+    let index = 0;
+    if (losingScoreCounter === 3) {
+        cells.forEach((cell,index) => {
+            cell.innerHTML = winningCombinations[index];
+        })
+    }
+    else {
+        cells.forEach((cell,index) => {
+            cell.innerHTML = inGameBoardNumbers[index];
+        })     
+    }
 }
 
 // init function
@@ -70,17 +81,17 @@ function boardSetting(randomNumberOfTimes) {
 }
 
 function difficultySetting(btn) {
-     
-    let boardSelectedNum = randomDifficultySelector(1,3);
-    winningCombinations.push(data[boardSelectedNum]);
     
-    //Ask dennis
-    winningCombinations[0].forEach((square) => {
+    //Picks a random solution from the winning options
+    let boardSelectedNum = randomDifficultySelector(0,2);
+    //Loops through the board to get each number
+    data[boardSelectedNum].forEach((square) => {
         square.forEach((num) => {
+            winningCombinations.push(num);
             inGameBoardNumbers.push(num);
-        })
-    })
-
+        });
+    });
+    //To check whether a button is selected and what difficulty to pass through the next function
     if (btn.textContent === 'Easy') {
         boardSetting(randomDifficultySelector(20,40));
     }
@@ -113,16 +124,64 @@ function numberAssignment() {
     cells.forEach((cell) => {
         cell.addEventListener('click', () => {
             gridSelection(cell.textContent, cell.id);
+            cell = 0;
         });
     });
 }
 
 function gridSelection(cellNum, cellId) {
     if (cellNum === '') {
-        inGameBoardNumbers[cellId] = numBtnSelected;
+        if (cellId.charAt(0) === '0') {            
+            inGameBoardNumbers[cellId.charAt(1)] = numBtnSelected;
+        }
+        else {
+            inGameBoardNumbers[cellId] = numBtnSelected;
+        }
+        lastGridPosition.push(cellId);
         render();
-        losingScoreFn();
-        winningOnCompletion();
+        losingScoreFn(cellId);
+        // winningOnCompletion();
+    }
+}
+
+
+
+// Winning on completion function (winningOnCompletion)
+
+/*
+    -Using the SOME property for array iterrations to check for an empty string or value.
+    -IF inGameBoardNumbers has nothing empty 
+        //THEN the game is won is displayed in the (messageText) or anywhere not decided yet.
+            -Add disable property to all the buttons for the (numberSelection) and (undoBtn)
+
+*/
+
+// losingScoreFn function 
+
+/*  
+    -Passed Param (indexRow) and (indexCol).
+    -IF (winningCombination) at (indexRow) and (indexCol) does not matche (inGameBoardNumbers) (indexRow) and (indexCol)
+        //THEN (losingScoreCounter) increments by 1.
+                -Update (losingScore) to the DOM.
+                -Disable property to all the buttons for the (numberSelection)
+                -(gridPosition) pushed in (lastGridPosition) used for the undo function
+                -(messageText) needs to say wrong answer please undo and u have this many tried left (losingScoreCounter)
+                    //IF (losingScoreCounter) equals to 3 
+                        //THEN game over is displayed in (messageText) 
+                            -Disable property to all the buttons for the (numberSelection) and (undoBtn)
+
+*/
+function losingScoreFn (cellId) {
+    let int = parseInt(cellId);
+
+    if (winningCombinations[int] !== inGameBoardNumbers[int]) {
+        losingScoreCounter++;
+        numberSelections.forEach((num) => {
+            num.disabled = true;
+        })
+    }
+    if (losingScoreCounter === 3) {
+        render();
     }
 }
 
@@ -139,36 +198,14 @@ function gridSelection(cellNum, cellId) {
 */
 
 function undoNumberAssignment(undoInput) {
-
-}
-
-// Winning on completion function (winningOnCompletion)
-
-/*
-    -Using the SOME property for array iterrations to check for an empty string or value.
-    -IF inGameBoardNumbers has nothing empty 
-        //THEN the game is won is displayed in the (messageText) or anywhere not decided yet.
-            -Add disable property to all the buttons for the (numberSelection) and (undoBtn)
-
-*/
-
-// losingScoreFn function 
-
-/*  
-    -Function invoked at (numberAssignment) function.
-    -Passed Param (indexRow) and (indexCol).
-    -IF (winningCombination) at (indexRow) and (indexCol) does not matche (inGameBoardNumbers) (indexRow) and (indexCol)
-        //THEN (losingScoreCounter) increments by 1.
-                -Update (losingScore) to the DOM.
-                -Disable property to all the buttons for the (numberSelection)
-                -(gridPosition) pushed in (lastGridPosition) used for the undo function
-                -(messageText) needs to say wrong answer please undo and u have this many tried left (losingScoreCounter)
-                    //IF (losingScoreCounter) equals to 3 
-                        //THEN game over is displayed in (messageText) 
-                            -Disable property to all the buttons for the (numberSelection) and (undoBtn)
-
-*/
-
+    console.log(lastGridPosition);
+    console.log(inGameBoardNumbers)
+    inGameBoardNumbers[parseInt(lastGridPosition[lastGridPosition.length - 1])] = '';
+    console.log(inGameBoardNumbers)
+    render();
+    numberSelections.forEach((num) => {
+        num.disabled = false;
+    })}
 
 /*----------- Event Listeners ----------*/
 
