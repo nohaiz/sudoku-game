@@ -12,7 +12,7 @@ const lastGridPosition = [];
 
 /*---------- Variables (state) ---------*/
 
-let gridPosition;
+let numBtnSelected = '';
 
 let losingScoreCounter = 0;
 
@@ -20,11 +20,11 @@ let losingScoreCounter = 0;
 
 const difficultyBtns = document.querySelectorAll('.difficultyBtn');
 
-const squares = document.querySelectorAll('.square');
+// const squares = document.querySelectorAll('.square');
 
 const cells = document.querySelectorAll('.cell');
 
-const numberSelection = document.querySelectorAll('.numberSelection');
+const numberSelections = document.querySelectorAll('.numberSelection');
 
 const undoBtn = document.querySelector('.undoBtn');
 
@@ -98,40 +98,32 @@ function difficultySetting(btn) {
     render();
 }
 
-// selectedGridPosition function
-
-/*
-    -Function will invoke through (cells) event listener.
-    -Parameter passed.
-    -Parameter used to get assigned Id.
-    -Parameter assigned to (gridPosition) at the global scope.
-*/
-
-function selectedGridPosition(square) {
-    console.log(square.target.className)
-
-}
 
 // Assigning numbers on the board function. (numberAssignment)
 
 /*
-    -Function will invoke through (numberSelection) event listener.
-    -Parameter passed.
-    -Parameter used to get text content from (numberSelection) event listener
-    -IF (gridPosition) is empty  
-        //THEN sets the inner text for (gridPosition) set to (numberSelection). 
-            -Split the (gridPosition) id string to get position of the grid (example id="0-0" it split to 0 and 0).
-            -Declare variable (indexRow) and (indexCol).
             -Invoke (losingScoreFn) and pass the parameters (indexRow) and (indexCol).
-            -Update the (inGameBoardNumbers)
             -Calls (winningOnCompletion) function.
     ELSE   
         //THEN **Additional feature I might add is to hightlight the surrounding squares parallel to eachother**
            
 */
 
-function numberAssignment(num) {
-    console.log(num.innerHTML)
+function numberAssignment() {
+    cells.forEach((cell) => {
+        cell.addEventListener('click', () => {
+            gridSelection(cell.textContent, cell.id);
+        });
+    });
+}
+
+function gridSelection(cellNum, cellId) {
+    if (cellNum === '') {
+        inGameBoardNumbers[cellId] = numBtnSelected;
+        render();
+        losingScoreFn();
+        winningOnCompletion();
+    }
 }
 
 // undoNumberAssignment function
@@ -187,15 +179,11 @@ difficultyBtns.forEach((btn) => {
     });
 });
 
-squares.forEach((square) => {
-
-    square.addEventListener('click', selectedGridPosition);
-});
-
-numberSelection.forEach((num => {
+numberSelections.forEach((num => {
 
     num.addEventListener('click', () => {
-        numberAssignment(num);
+        numBtnSelected = num.textContent;
+        numberAssignment();
     })
 }));
 
