@@ -16,6 +16,8 @@ let numBtnSelected = '';
 
 let losingScoreCounter = 0;
 
+let hasWon = false;
+
 /*----- Cached Element References  -----*/
 
 const difficultyBtns = document.querySelectorAll('.difficultyBtn');
@@ -41,6 +43,15 @@ function render() {
     if (losingScoreCounter === 3) {
         cells.forEach((cell,index) => {
             cell.innerHTML = winningCombinations[index];
+            cell.style.color = "red";
+            messageText.innerHTML = 'YOU LOSE!!!'
+        })
+    }
+    else if (hasWon) {
+        cells.forEach((cell,index) => {
+            cell.innerHTML = winningCombinations[index];
+            cell.style.color = "green";
+            messageText.innerHTML = 'YOU WIN!!!'
         })
     }
     else {
@@ -105,17 +116,9 @@ function difficultySetting(btn) {
     numberSelections.forEach((numBtn) => {
         numBtn.disabled = false;
     })
+    undoBtn.disabled = false;
     render();
 }
-
-// Assigning numbers on the board function. (numberAssignment)
-
-/*
-            -Calls (winningOnCompletion) function.
-    ELSE   
-        //THEN **Additional feature I might add is to hightlight the surrounding squares parallel to eachother**
-           
-*/
 
 function numberAssignment() {
     cells.forEach((cell) => {
@@ -134,24 +137,15 @@ function gridSelection(cellNum, cellId) {
         else {
             inGameBoardNumbers[cellId] = numBtnSelected;
         }
-        lastGridPosition.push(cellId);
-        render();
+        winningOnCompletion();
         losingScoreFn(cellId);
-        // winningOnCompletion();
+        render();
     }
 }
 
-
-
-// Winning on completion function (winningOnCompletion)
-
-/*
-    -Using the SOME property for array iterrations to check for an empty string or value.
-    -IF inGameBoardNumbers has nothing empty 
-        //THEN the game is won is displayed in the (timer) or anywhere not decided yet.
-            -Add disable property to all the buttons for the (numberSelection) and (undoBtn)
-
-*/
+function winningOnCompletion() {
+    hasWon = inGameBoardNumbers.every(num => num !== '');
+}
 
 // losingScoreFn function 
 
@@ -173,12 +167,10 @@ function losingScoreFn (cellId) {
 
     if (winningCombinations[int] !== inGameBoardNumbers[int]) {
         losingScoreCounter++;
+        lastGridPosition.push(int);
+
         losingScore.innerHTML = `Mistakes: ${losingScoreCounter}/3`;
-        cells[int].classList.add('wrongNum'); 
-    }
-    if (losingScoreCounter === 3) {
-        render();
-        // timer.innerHTML = 
+        cells[int].classList.add('wrongNum');
     }
 }
 
@@ -195,9 +187,14 @@ function losingScoreFn (cellId) {
 */
 
 function undoNumberAssignment() {
-    inGameBoardNumbers[parseInt(lastGridPosition[lastGridPosition.length - 1])] = '';
-    cells[parseInt(lastGridPosition[lastGridPosition.length - 1])].classList.remove('wrongNum'); 
+    lastGridPosition.forEach(num => {
+        let index = parseInt(num);
+        inGameBoardNumbers[index] = '';
+        cells[index].classList.remove('wrongNum');
+    });
+    lastGridPosition.length = 0;
     render();
+    console.log(lastGridPosition);
 }
 
 /*----------- Event Listeners ----------*/
