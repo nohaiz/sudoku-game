@@ -264,7 +264,7 @@ undoBtn.addEventListener('click', undoNumberAssignment);
 resetBtn.addEventListener('click', init);
 
 cells.forEach((cell) => {
-    cell.addEventListener('click', () => {
+    cell.addEventListener('mouseover', () => {
         cells.forEach((cell) => {
             cell.classList.remove('highlightDark');
         })
