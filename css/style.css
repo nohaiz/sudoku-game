@@ -5,6 +5,10 @@
 body {
     display: flex;
     justify-content: space-evenly;
+    font-family: 'Times New Roman', Times, serif;
+    background-image: url('../Images/Background.png');
+    background-position: center;
+    background-size: cover;
 }
 
 /*Section division to 3 equal widths */
@@ -13,7 +17,7 @@ body {
     flex-direction: column;
     align-items: center;
     height: 100%;
-    width: 30vw;
+    width: 31vw;
     justify-content: center;
 }
 
@@ -49,37 +53,61 @@ body {
 button {
     margin-top: 5%;
     font-size: 1rem;
-    color: cadetblue;
+    color: black;
     cursor: pointer;
+    background-color: lightsteelblue;
+    border-radius: 2rem;
+
 }
 
 button:hover {
-    background-color: lightsteelblue;
+    background-color:lightblue;
+    border: 3px solid black;
+}
+
+button:disabled:hover{
+    cursor: not-allowed;
+    border: 3px solid black;
+
+}
+.numberSelection{
+    width: 2.1rem;
 }
 
 p {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+    font-weight: lighter;
 }
 
 h1 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+}
+
+h2 {
+    font-size: 1.2rem;
 }
 
 ul {
     display: flex;
     flex-direction: column;
-    height: 50%;
+    height: 65%;
     justify-content: space-evenly;
-
+    
 }
 
 li {
-    font-family: 'Times New Roman', Times, serif;
     list-style: none;
+    font-size: 1.1rem;
+    font-weight: lighter;   
 }
 
 .cell.wrongNum {
     color: red;
     background-color: rgb(120, 150, 189);
+}
+
+.numberSelection.selected {
+    background-color: gold;
+    border: 3px solid black;
+
 }

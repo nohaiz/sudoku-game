@@ -18,6 +18,8 @@ let losingScoreCounter = 0;
 
 let hasWon = false;
 
+let hasReset = false;
+
 /*----- Cached Element References  -----*/
 
 const difficultyBtns = document.querySelectorAll('.difficultyBtn');
@@ -36,10 +38,12 @@ const losingScore = document.querySelector('.losingScore');
 
 /*-------------- Functions -------------*/
 
+function cellsLoop() {
+    
+}
+
 function render() {
 
-    let counter = 0;
-    let index = 0;
     if (losingScoreCounter === 3) {
         cells.forEach((cell,index) => {
             cell.innerHTML = winningCombinations[index];
@@ -55,24 +59,48 @@ function render() {
         })
     }
     else {
-        cells.forEach((cell,index) => {
-            cell.innerHTML = inGameBoardNumbers[index];
-        });  
+        if (hasReset) {
+            return;
+        }
+        else {
+            cells.forEach((cell,index) => {
+                cell.innerHTML = inGameBoardNumbers[index];
+            });  
+        }
     } 
 }
 
-// init function
+function init() {
+    winningCombinations.length = 0;
+    inGameBoardNumbers.length = 0;
+    lastGridPosition.length = 0;
+    numBtnSelected = '';
+    losingScoreCounter = 0;
+    hasWon = false;
 
-/*
-    -Invoked when the (resetBtn) is clicked.
-    -Variable states set either empty or 0.
-    -Cached Element References (cells,timer,losingScore) set to default.
-    -Buttons need to be enabled.
-*/
+    cells.forEach((cell) => {
+        cell.innerHTML = '';
+        cell.style.color = '';
+    })
+    difficultyBtns.forEach((btn) => {
+        btn.disabled = false;
+    });
 
-function init(intialize) {
+    numberSelections.forEach((numBtn) => {
+        numBtn.disabled = true;
+    });
 
+    undoBtn.disabled = true;
+    hasReset = true;
+
+    messageText.innerHTML = 'Complete the board to win!!!';
+    losingScore.innerHTML = `Mistakes: 0/3`;
+    cells.forEach((cell) => {
+        cell.classList.remove('wrongNum');
+    })
 }
+
+
 
 function randomDifficultySelector(minNum,maxNum) {
     return Math.round(Math.random() * (maxNum-minNum) + minNum);
@@ -88,17 +116,14 @@ function boardSetting(randomNumberOfTimes) {
 }
 
 function difficultySetting(btn) {
-    
-    //Picks a random solution from the winning options
+    hasReset = false;
     let boardSelectedNum = randomDifficultySelector(0,2);
-    //Loops through the board to get each number
     data[boardSelectedNum].forEach((square) => {
         square.forEach((num) => {
             winningCombinations.push(num);
             inGameBoardNumbers.push(num);
         });
     });
-    //To check whether a button is selected and what difficulty to pass through the next function
     if (btn.textContent === 'Easy') {
         boardSetting(randomDifficultySelector(20,40));
     }
@@ -109,7 +134,6 @@ function difficultySetting(btn) {
         boardSetting(randomDifficultySelector(60,75));
     }
 
-    //Add message text
     difficultyBtns.forEach((btn) => {
         btn.disabled = true;
     })
@@ -120,7 +144,7 @@ function difficultySetting(btn) {
     render();
 }
 
-function numberAssignment() {
+function numberAssignment() {    
     cells.forEach((cell) => {
         cell.addEventListener('click', () => {
             gridSelection(cell.textContent, cell.id);
@@ -140,32 +164,17 @@ function gridSelection(cellNum, cellId) {
         winningOnCompletion();
         losingScoreFn(cellId);
         render();
-    }
+    }    
 }
 
 function winningOnCompletion() {
     hasWon = inGameBoardNumbers.every(num => num !== '');
 }
 
-// losingScoreFn function 
-
-/*  
-    -Passed Param (indexRow) and (indexCol).
-    -IF (winningCombination) at (indexRow) and (indexCol) does not matche (inGameBoardNumbers) (indexRow) and (indexCol)
-        //THEN (losingScoreCounter) increments by 1.
-                -Update (losingScore) to the DOM.
-                -Disable property to all the buttons for the (numberSelection)
-                -(gridPosition) pushed in (lastGridPosition) used for the undo function
-                -(timer) needs to say wrong answer please undo and u have this many tried left (losingScoreCounter)
-                    //IF (losingScoreCounter) equals to 3 
-                        //THEN game over is displayed in (timer) 
-                            -Disable property to all the buttons for the (numberSelection) and (undoBtn)
-
-*/
 function losingScoreFn (cellId) {
     let int = parseInt(cellId);
 
-    if (winningCombinations[int] !== inGameBoardNumbers[int]) {
+    if (winningCombinations[int] !== inGameBoardNumbers[int] && !hasReset) {
         losingScoreCounter++;
         lastGridPosition.push(int);
 
@@ -173,18 +182,6 @@ function losingScoreFn (cellId) {
         cells[int].classList.add('wrongNum');
     }
 }
-
-// undoNumberAssignment function
-
-/*
-  -Call the element using the first index which is 0 at (lastGridPosition).
-  -Split the string (example id="0-0" it split to 0 and 0).
-  -Declare variable (indexRow) and (indexCol).
-  -Assign the split to each variable.
-  -Using (lastGridPosition) array and (indexRow) and (indexCol) as indeces to set the string empty.
-  -unshift (lastGridPosition) at the first element.
-
-*/
 
 function undoNumberAssignment() {
     lastGridPosition.forEach(num => {
@@ -194,7 +191,6 @@ function undoNumberAssignment() {
     });
     lastGridPosition.length = 0;
     render();
-    console.log(lastGridPosition);
 }
 
 /*----------- Event Listeners ----------*/
@@ -206,19 +202,20 @@ difficultyBtns.forEach((btn) => {
     });
 });
 
-numberSelections.forEach((num => {
-
+numberSelections.forEach((num) => {
     num.addEventListener('click', () => {
-        numBtnSelected = num.textContent;
+        numberSelections.forEach((otherNum) => {
+            otherNum.classList.remove('selected');
+        });
         numberAssignment();
-    })
-}));
-
-undoBtn.addEventListener('click', (undoInput) => {
-    undoNumberAssignment(undoInput);
+        numBtnSelected = num.textContent;
+        num.classList.add('selected');;
+    });
 });
 
-resetBtn.addEventListener('click', (intialize)=> {
-    init(intialize);
-});
+
+
+undoBtn.addEventListener('click', undoNumberAssignment);
+
+resetBtn.addEventListener('click', init);
  
