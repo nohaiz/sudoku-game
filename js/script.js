@@ -24,6 +24,8 @@ let hasReset = false;
 
 const difficultyBtns = document.querySelectorAll('.difficultyBtn');
 
+const squares = document.querySelectorAll('.square');
+
 const cells = document.querySelectorAll('.cell');
 
 const numberSelections = document.querySelectorAll('.numberSelection');
@@ -44,7 +46,7 @@ function render() {
         cells.forEach((cell,index) => {
             cell.innerHTML = winningCombinations[index];
             cell.style.color = "red";
-            messageText.innerHTML = 'You Lose!!';
+            messageText.innerHTML = 'Game over you lose.';
             numberSelections.forEach((otherNum) => {
                 otherNum.classList.remove('selected');
             });
@@ -54,7 +56,7 @@ function render() {
         cells.forEach((cell,index) => {
             cell.innerHTML = winningCombinations[index];
             cell.style.color = "green";
-            messageText.innerHTML = 'You Win!!'
+            messageText.innerHTML = 'Game over you win.'
         });
     }
     else if (hasReset){
@@ -130,13 +132,13 @@ function difficultySetting(btn) {
         });
     });
     if (btn.textContent === 'Easy') {
-        boardSetting(randomDifficultySelector(20,40));
+        boardSetting(randomDifficultySelector(30,40));
     }
     else if (btn.textContent === 'Medium') {
-        boardSetting(randomDifficultySelector(40,60));
+        boardSetting(randomDifficultySelector(50,60));
     }
     else if (btn.textContent === 'Difficult') {
-        boardSetting(randomDifficultySelector(60,75));
+        boardSetting(randomDifficultySelector(70,75));
     }
 
     difficultyBtns.forEach((btn) => {
@@ -209,6 +211,33 @@ function undoNumberAssignment() {
     render();
 }
 
+function cellsHighlight (selectedCell) {
+    let row = selectedCell.split(' ');
+    let col = selectedCell.split(' ');
+    cells.forEach((cell) => {
+        cell.classList.remove('highlight');
+    });
+    
+    cells.forEach((cell) => {
+        if (cell.className.split(' ')[1] === row[1]) {
+            cell.classList.add('highlight');
+
+        }
+        if (cell.className.split(' ')[2] === col[2]) {
+            cell.classList.add('highlight');
+        }
+    })
+
+    squares.forEach((square) => {
+        square.addEventListener('click', () => {
+            Array.from(square.children).forEach((child) => {
+                child.classList.add('highlight');
+            });
+        });
+    });
+}
+
+
 /*----------- Event Listeners ----------*/
 
 difficultyBtns.forEach((btn) => {
@@ -226,11 +255,20 @@ numberSelections.forEach((num) => {
         });
         numberAssignment();
         selectedNumber = num.textContent;
-        num.classList.add('selected');;
+        num.classList.add('selected');
     });
 });
 
 undoBtn.addEventListener('click', undoNumberAssignment);
 
 resetBtn.addEventListener('click', init);
- 
+
+cells.forEach((cell) => {
+    cell.addEventListener('click', () => {
+        cells.forEach((cell) => {
+            cell.classList.remove('highlightDark');
+        })
+        cellsHighlight(cell.className)
+        cell.classList.add('highlightDark');
+    });
+});

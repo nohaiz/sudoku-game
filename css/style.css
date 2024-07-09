@@ -16,7 +16,7 @@ h1 {
 }
 
 h2 {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }
 
 p {
@@ -35,16 +35,19 @@ li {
     list-style: none;
     font-size: 1.1rem;
     font-weight: lighter;   
+    width: 25vw;
 }
 
-
+.messageText {
+    font-size: 2rem;
+}
 /*Section division to 3 equal widths of the body */
 .parentContainerSec {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100%;
-    width: 31vw;
+    width: 32vw;
     justify-content: center;
 }
 
@@ -104,7 +107,7 @@ button:disabled:hover{
 }
 /* Number selction buttons class selectors */
 .numberSelection{
-    width: 2.1rem;
+    width: 2rem;
 }
 
 .cell.wrongNum {
@@ -115,4 +118,13 @@ button:disabled:hover{
 .numberSelection.selected {
     background-color: gold;
     border: 3px solid black;
+}
+
+.cell.highlight {
+    background-color: aliceblue;
+    border: 1px solid black;
+}
+.cell.highlightDark {
+    background-color: lightsteelblue;
+    border: 1px solid black;
 }
