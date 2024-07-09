@@ -20,6 +20,7 @@ let hasWon = false;
 
 let hasReset = false;
 
+
 /*----- Cached Element References  -----*/
 
 const difficultyBtns = document.querySelectorAll('.difficultyBtn');
@@ -212,31 +213,28 @@ function undoNumberAssignment() {
 }
 
 function cellsHighlight (selectedCell) {
+    
     let row = selectedCell.split(' ');
     let col = selectedCell.split(' ');
+
     cells.forEach((cell) => {
         cell.classList.remove('highlight');
     });
-    
-    cells.forEach((cell) => {
-        if (cell.className.split(' ')[1] === row[1]) {
-            cell.classList.add('highlight');
 
-        }
-        if (cell.className.split(' ')[2] === col[2]) {
-            cell.classList.add('highlight');
-        }
-    })
+        cells.forEach((cell) => {
+            if (cell.className.split(' ')[1] === row[1]) {
+                cell.classList.add('highlight');
+
+            }
+            else if (cell.className.split(' ')[2] === col[2]) {
+                cell.classList.add('highlight');
+            }
+        });
 
     squares.forEach((square) => {
         square.addEventListener('mouseover', () => {
             Array.from(square.children).forEach((child) => {
                 child.classList.add('highlight');
-            });
-        });
-        square.addEventListener('mouseout', () => {
-            Array.from(square.children).forEach((child) => {
-                child.classList.remove('highlight');
             });
         });
     });
@@ -273,13 +271,8 @@ cells.forEach((cell) => {
         cells.forEach((c) => {
             c.classList.remove('highlightDark');
         });
+
         cellsHighlight(cell.className);
         cell.classList.add('highlightDark');
-    });
-
-    cell.addEventListener('mouseout', () => {
-        cells.forEach((c) => {
-            c.classList.remove('highlightDark');
-        });
     });
 });
