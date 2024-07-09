@@ -44,7 +44,7 @@ function render() {
         cells.forEach((cell,index) => {
             cell.innerHTML = winningCombinations[index];
             cell.style.color = "red";
-            messageText.innerHTML = 'YOU LOSE!!!';
+            messageText.innerHTML = 'You Lose!!';
             numberSelections.forEach((otherNum) => {
                 otherNum.classList.remove('selected');
             });
@@ -54,7 +54,7 @@ function render() {
         cells.forEach((cell,index) => {
             cell.innerHTML = winningCombinations[index];
             cell.style.color = "green";
-            messageText.innerHTML = 'YOU WIN!!!'
+            messageText.innerHTML = 'You Win!!'
         });
     }
     else if (hasReset){
@@ -67,7 +67,7 @@ function render() {
     }
 }
 
-function init() {
+function resetGame() {
     winningCombinations.length = 0;
     inGameBoardNumbers.length = 0;
     wrongNumbersAssignment.length = 0;
@@ -75,11 +75,23 @@ function init() {
     losingScoreCounter = 0;
     hasWon = false;
     hasReset = true;
+}
 
+function clearBoard() {
     cells.forEach((cell) => {
         cell.innerHTML = '';
         cell.style.color = '';
     });
+    messageText.innerHTML = 'Complete the board to win!';
+    losingScore.innerHTML = `Mistakes: 0/3`;
+    cells.forEach((cell) => {
+        cell.classList.remove('wrongNum');
+    })
+}
+function init() {
+    
+    resetGame();
+    clearBoard();
 
     difficultyBtns.forEach((btn) => {
         btn.disabled = false;
@@ -93,15 +105,7 @@ function init() {
         otherNum.classList.remove('selected');
     });
     undoBtn.disabled = true;
-
-    messageText.innerHTML = 'Complete the board to win!!!';
-    losingScore.innerHTML = `Mistakes: 0/3`;
-    cells.forEach((cell) => {
-        cell.classList.remove('wrongNum');
-    })
 }
-
-
 
 function randomDifficultySelector(minNum,maxNum) {
     return Math.round(Math.random() * (maxNum-minNum) + minNum);
@@ -159,15 +163,20 @@ function numberAssignment() {
 
 function gridSelection(cellNum, cellId) {
     if (cellNum === '' && !hasReset) {
-        if (cellId.charAt(0) === '0') {            
-            inGameBoardNumbers[cellId.charAt(1)] = selectedNumber;
+        if (selectedNumber === '') {
+            return;
         }
         else {
-            inGameBoardNumbers[cellId] = selectedNumber;
+            if (cellId.charAt(0) === '0') {            
+                inGameBoardNumbers[cellId.charAt(1)] = selectedNumber;
+            }
+            else {
+                inGameBoardNumbers[cellId] = selectedNumber;
+            }
+            winningOnCompletion();
+            losingScoreFn(cellId);
+            render();
         }
-        winningOnCompletion();
-        losingScoreFn(cellId);
-        render();
     }    
 }
 

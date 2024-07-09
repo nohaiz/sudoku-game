@@ -11,7 +11,34 @@ body {
     background-size: cover;
 }
 
-/*Section division to 3 equal widths */
+h1 {
+    font-size: 1.6rem;
+}
+
+h2 {
+    font-size: 1.2rem;
+}
+
+p {
+    font-size: 1.1rem;
+    font-weight: lighter;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    height: 65%;
+    justify-content: space-evenly;  
+}
+
+li {
+    list-style: none;
+    font-size: 1.1rem;
+    font-weight: lighter;   
+}
+
+
+/*Section division to 3 equal widths of the body */
 .parentContainerSec {
     display: flex;
     flex-direction: column;
@@ -29,6 +56,7 @@ body {
     width: 40vw;
 }
 
+/* Big squares*/
 .square {
     display: flex;
     flex-wrap: wrap;
@@ -50,6 +78,11 @@ body {
     height: 33.33%;
 }
 
+.cell:hover {
+    cursor: pointer;
+}
+
+/* Buttons */
 button {
     margin-top: 5%;
     font-size: 1rem;
@@ -57,7 +90,6 @@ button {
     cursor: pointer;
     background-color: lightsteelblue;
     border-radius: 2rem;
-
 }
 
 button:hover {
@@ -70,35 +102,9 @@ button:disabled:hover{
     border: 3px solid black;
 
 }
+/* Number selction buttons class selectors */
 .numberSelection{
     width: 2.1rem;
-}
-
-p {
-    font-size: 1.1rem;
-    font-weight: lighter;
-}
-
-h1 {
-    font-size: 1.6rem;
-}
-
-h2 {
-    font-size: 1.2rem;
-}
-
-ul {
-    display: flex;
-    flex-direction: column;
-    height: 65%;
-    justify-content: space-evenly;
-    
-}
-
-li {
-    list-style: none;
-    font-size: 1.1rem;
-    font-weight: lighter;   
 }
 
 .cell.wrongNum {
@@ -109,5 +115,4 @@ li {
 .numberSelection.selected {
     background-color: gold;
     border: 3px solid black;
-
 }
