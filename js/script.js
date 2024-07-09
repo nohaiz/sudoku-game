@@ -89,6 +89,8 @@ function clearBoard() {
     losingScore.innerHTML = `Mistakes: 0/3`;
     cells.forEach((cell) => {
         cell.classList.remove('wrongNum');
+        cell.classList.remove('highlight');
+
     })
 }
 function init() {
