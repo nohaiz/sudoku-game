@@ -232,7 +232,11 @@ function cellsHighlight (selectedCell) {
         square.addEventListener('mouseover', () => {
             Array.from(square.children).forEach((child) => {
                 child.classList.add('highlight');
-                console.log(child);
+            });
+        });
+        square.addEventListener('mouseout', () => {
+            Array.from(square.children).forEach((child) => {
+                child.classList.remove('highlight');
             });
         });
     });
@@ -266,10 +270,16 @@ resetBtn.addEventListener('click', init);
 
 cells.forEach((cell) => {
     cell.addEventListener('mouseover', () => {
-        cells.forEach((cell) => {
-            cell.classList.remove('highlightDark');
-        })
-        cellsHighlight(cell.className)
+        cells.forEach((c) => {
+            c.classList.remove('highlightDark');
+        });
+        cellsHighlight(cell.className);
         cell.classList.add('highlightDark');
+    });
+
+    cell.addEventListener('mouseout', () => {
+        cells.forEach((c) => {
+            c.classList.remove('highlightDark');
+        });
     });
 });
