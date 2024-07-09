@@ -8,11 +8,11 @@ const winningCombinations = [];
 
 const inGameBoardNumbers = [];
 
-const lastGridPosition = [];
+const wrongNumbersAssignment = [];
 
 /*---------- Variables (state) ---------*/
 
-let numBtnSelected = '';
+let selectedNumber = '';
 
 let losingScoreCounter = 0;
 
@@ -38,50 +38,49 @@ const losingScore = document.querySelector('.losingScore');
 
 /*-------------- Functions -------------*/
 
-function cellsLoop() {
-    
-}
-
 function render() {
 
     if (losingScoreCounter === 3) {
         cells.forEach((cell,index) => {
             cell.innerHTML = winningCombinations[index];
             cell.style.color = "red";
-            messageText.innerHTML = 'YOU LOSE!!!'
-        })
+            messageText.innerHTML = 'YOU LOSE!!!';
+            numberSelections.forEach((otherNum) => {
+                otherNum.classList.remove('selected');
+            });
+        });
     }
     else if (hasWon) {
         cells.forEach((cell,index) => {
             cell.innerHTML = winningCombinations[index];
             cell.style.color = "green";
             messageText.innerHTML = 'YOU WIN!!!'
-        })
+        });
+    }
+    else if (hasReset){
+            return;
     }
     else {
-        if (hasReset) {
-            return;
-        }
-        else {
-            cells.forEach((cell,index) => {
-                cell.innerHTML = inGameBoardNumbers[index];
-            });  
-        }
-    } 
+        cells.forEach((cell,index) => {
+            cell.innerHTML = inGameBoardNumbers[index];
+        });  
+    }
 }
 
 function init() {
     winningCombinations.length = 0;
     inGameBoardNumbers.length = 0;
-    lastGridPosition.length = 0;
-    numBtnSelected = '';
+    wrongNumbersAssignment.length = 0;
+    selectedNumber = '';
     losingScoreCounter = 0;
     hasWon = false;
+    hasReset = true;
 
     cells.forEach((cell) => {
         cell.innerHTML = '';
         cell.style.color = '';
-    })
+    });
+
     difficultyBtns.forEach((btn) => {
         btn.disabled = false;
     });
@@ -90,8 +89,10 @@ function init() {
         numBtn.disabled = true;
     });
 
+    numberSelections.forEach((otherNum) => {
+        otherNum.classList.remove('selected');
+    });
     undoBtn.disabled = true;
-    hasReset = true;
 
     messageText.innerHTML = 'Complete the board to win!!!';
     losingScore.innerHTML = `Mistakes: 0/3`;
@@ -136,10 +137,13 @@ function difficultySetting(btn) {
 
     difficultyBtns.forEach((btn) => {
         btn.disabled = true;
-    })
+    });
     numberSelections.forEach((numBtn) => {
         numBtn.disabled = false;
-    })
+    });
+    numberSelections.forEach((otherNum) => {
+        otherNum.classList.remove('selected');
+    });
     undoBtn.disabled = false;
     render();
 }
@@ -154,12 +158,12 @@ function numberAssignment() {
 }
 
 function gridSelection(cellNum, cellId) {
-    if (cellNum === '') {
+    if (cellNum === '' && !hasReset) {
         if (cellId.charAt(0) === '0') {            
-            inGameBoardNumbers[cellId.charAt(1)] = numBtnSelected;
+            inGameBoardNumbers[cellId.charAt(1)] = selectedNumber;
         }
         else {
-            inGameBoardNumbers[cellId] = numBtnSelected;
+            inGameBoardNumbers[cellId] = selectedNumber;
         }
         winningOnCompletion();
         losingScoreFn(cellId);
@@ -176,7 +180,7 @@ function losingScoreFn (cellId) {
 
     if (winningCombinations[int] !== inGameBoardNumbers[int] && !hasReset) {
         losingScoreCounter++;
-        lastGridPosition.push(int);
+        wrongNumbersAssignment.push(int);
 
         losingScore.innerHTML = `Mistakes: ${losingScoreCounter}/3`;
         cells[int].classList.add('wrongNum');
@@ -184,12 +188,15 @@ function losingScoreFn (cellId) {
 }
 
 function undoNumberAssignment() {
-    lastGridPosition.forEach(num => {
+    wrongNumbersAssignment.forEach(num => {
         let index = parseInt(num);
         inGameBoardNumbers[index] = '';
         cells[index].classList.remove('wrongNum');
     });
-    lastGridPosition.length = 0;
+    wrongNumbersAssignment.length = 0;
+    numberSelections.forEach((otherNum) => {
+        otherNum.classList.remove('selected');
+    });
     render();
 }
 
@@ -203,17 +210,16 @@ difficultyBtns.forEach((btn) => {
 });
 
 numberSelections.forEach((num) => {
+    
     num.addEventListener('click', () => {
         numberSelections.forEach((otherNum) => {
             otherNum.classList.remove('selected');
         });
         numberAssignment();
-        numBtnSelected = num.textContent;
+        selectedNumber = num.textContent;
         num.classList.add('selected');;
     });
 });
-
-
 
 undoBtn.addEventListener('click', undoNumberAssignment);
 
