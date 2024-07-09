@@ -229,9 +229,10 @@ function cellsHighlight (selectedCell) {
     })
 
     squares.forEach((square) => {
-        square.addEventListener('click', () => {
+        square.addEventListener('mouseover', () => {
             Array.from(square.children).forEach((child) => {
                 child.classList.add('highlight');
+                console.log(child);
             });
         });
     });
