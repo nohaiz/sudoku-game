@@ -93,6 +93,7 @@ function clearBoard() {
 
     })
 }
+
 function init() {
     
     resetGame();
@@ -232,14 +233,6 @@ function cellsHighlight (selectedCell) {
                 cell.classList.add('highlight');
             }
         });
-
-    squares.forEach((square) => {
-        square.addEventListener('mouseover', () => {
-            Array.from(square.children).forEach((child) => {
-                child.classList.add('highlight');
-            });
-        });
-    });
 }
 
 
@@ -276,5 +269,19 @@ cells.forEach((cell) => {
 
         cellsHighlight(cell.className);
         cell.classList.add('highlightDark');
+
+        squares.forEach((square) => {
+            square.addEventListener('mouseover', () => {
+                Array.from(square.children).forEach((child) => {
+                    child.classList.add('highlight');
+                });
+            });
+        });
+    });
+
+    cell.addEventListener('mouseout', () => {
+        cells.forEach((c) => {
+            c.classList.add('highlightDark');
+        });
     });
 });
