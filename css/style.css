@@ -134,7 +134,6 @@ button:disabled:hover{
     border: 1px solid black;
 }
 
-/* Test */
 @media screen and (max-width: 767px) {
     body {
         flex-direction: column;
@@ -144,8 +143,11 @@ button:disabled:hover{
         min-height: 100vh; 
     }
     button {
-        text-align: center;
-    }
+        text-align: center; /* Ensure text is centered horizontally */
+        padding: 10px; /* Adjust padding as needed for adequate space around text */
+        width: 100%; /* Ensure buttons take full width of their container */
+        box-sizing: border-box;
+        }
     .parentContainerSec {
         width: auto;
         height: auto;
