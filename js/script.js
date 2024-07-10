@@ -284,4 +284,11 @@ cells.forEach((cell) => {
             c.classList.remove('highlight');
         });
     });
+    squares.forEach((square) => {
+        square.addEventListener('mouseout', () => {
+            Array.from(square.children).forEach((child) => {
+                child.classList.remove('highlight');
+            });
+        });
+    });
 });

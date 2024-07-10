@@ -120,7 +120,7 @@ button:disabled:hover{
 }
 
 .numberSelection.selected {
-    background-color: gold;
+    background-color: aliceblue;
     border: 3px solid black;
 }
 
