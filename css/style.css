@@ -145,7 +145,7 @@ button:disabled:hover{
     }
     button {
         justify-content: center;
-        text-align: center;
+        /* text-align: center; */
     }
     .parentContainerSec {
         width: auto;
