@@ -142,12 +142,6 @@ button:disabled:hover{
         justify-content: center;
         min-height: 100vh; 
     }
-    button {
-        text-align: center; 
-        padding: 10px; 
-        width: 100%; 
-        box-sizing: border-box;
-    }
     .parentContainerSec {
         width: auto;
         height: auto;
