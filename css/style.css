@@ -167,7 +167,8 @@ button:disabled:hover{
         justify-content: center;
         align-items: baseline;
         margin-top: 0.5rem;
-        width: 95vw;
+        width: 80vw;
+        flex-wrap: nowrap;
     }
     .instructions {
         display: none;
@@ -181,7 +182,6 @@ button:disabled:hover{
         width: 50%;
         justify-content: center;
     }
-
     .difficultySelector {
         display: flex;
         margin-top: 5%;
