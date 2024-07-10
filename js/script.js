@@ -281,7 +281,7 @@ cells.forEach((cell) => {
 
     cell.addEventListener('mouseout', () => {
         cells.forEach((c) => {
-            c.classList.add('highlightDark');
+            c.classList.remove('highlight');
         });
     });
 });
