@@ -129,12 +129,19 @@ function boardSetting(randomNumberOfTimes) {
 function difficultySetting(btn) {
     hasReset = false;
     let boardSelectedNum = randomDifficultySelector(0,2);
-    data[boardSelectedNum].forEach((square) => {
-        square.forEach((num) => {
-            winningCombinations.push(num);
-            inGameBoardNumbers.push(num);
-        });
-    });
+
+    for (let blockRow = 0; blockRow < 3; blockRow++) {
+        for (let blockCol = 0; blockCol < 3; blockCol++) {
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    inGameBoardNumbers.push(data[boardSelectedNum][blockRow * 3 + i][blockCol * 3 + j]);
+                    winningCombinations.push(data[boardSelectedNum][blockRow * 3 + i][blockCol * 3 + j]);
+                }
+            }
+        }
+    }
+
+    console.log(winningCombinations);
     if (btn.textContent === 'Easy') {
         boardSetting(randomDifficultySelector(30,40));
     }
