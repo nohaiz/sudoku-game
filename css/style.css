@@ -141,10 +141,13 @@ button:disabled:hover{
         align-items: center;
         justify-content: center;
         min-height: 100vh; 
+        overflow: scroll;
+
 
     }
     .parentContainerSec {
         width: auto;
+        height: auto;
     }
     .sudokuBoard {
         width: 90vw;
