@@ -167,7 +167,7 @@ button:disabled:hover{
         justify-content: center;
         align-items: baseline;
         margin-top: 0.5rem;
-        width: 80vw;
+        width: 60vw;
         flex-wrap: nowrap;
         gap: 2%;
     }
