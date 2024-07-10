@@ -143,9 +143,9 @@ button:disabled:hover{
         justify-content: center;
         min-height: 100vh; 
     }
-    button {
-        font-size: 0.9rem;
-    }
+    /* button {
+
+    } */
     .parentContainerSec {
         width: auto;
         height: auto;
@@ -163,8 +163,10 @@ button:disabled:hover{
         margin-bottom: 5%;
     }
     .btnsUnderBoard{
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
         margin-top: 0.5rem;
-        margin-left: 10%;
         width: 95vw;
     }
     .instructions {
@@ -179,10 +181,12 @@ button:disabled:hover{
         width: 50%;
         justify-content: center;
     }
+
     .difficultySelector {
         display: flex;
         margin-top: 5%;
         width: 100vw;
         justify-content: center;
+        gap: 2%;
     }
 }
