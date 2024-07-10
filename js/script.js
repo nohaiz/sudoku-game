@@ -141,7 +141,6 @@ function difficultySetting(btn) {
         }
     }
 
-    console.log(winningCombinations);
     if (btn.textContent === 'Easy') {
         boardSetting(randomDifficultySelector(30,40));
     }
