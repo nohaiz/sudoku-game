@@ -10,6 +10,7 @@ body {
     background-position: center;
     background-size: cover;
     min-height: 100vh; 
+    overflow: hidden;
 
 }
 
@@ -50,7 +51,7 @@ li {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
+    height: 100vh;
     width: 32vw;
     justify-content: center;
 }
