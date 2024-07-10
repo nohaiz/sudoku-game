@@ -167,9 +167,8 @@ button:disabled:hover{
         justify-content: center;
         align-items: baseline;
         margin-top: 0.5rem;
-        width: 10vw;
         flex-wrap: nowrap;
-        gap: 2%;
+        gap: 1.2%;
     }
     .instructions {
         display: none;
