@@ -143,9 +143,9 @@ button:disabled:hover{
         justify-content: center;
         min-height: 100vh; 
     }
-    /* button {
-
-    } */
+    button {
+        text-align: center;
+    }
     .parentContainerSec {
         width: auto;
         height: auto;
@@ -169,6 +169,8 @@ button:disabled:hover{
         margin-top: 0.5rem;
         width: 80vw;
         flex-wrap: nowrap;
+        gap: 1%;
+        font-size: 2rem;
     }
     .instructions {
         display: none;
