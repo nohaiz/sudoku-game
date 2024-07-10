@@ -53,7 +53,7 @@ li {
     height: 100vh;
     width: 32vw;
     justify-content: center;
-    margin-top: 0%;
+    margin-top: -2%;
 }
 
 /* Board */
@@ -141,13 +141,12 @@ button:disabled:hover{
         align-items: center;
         justify-content: center;
         min-height: 100vh; 
-        overflow: scroll;
-
 
     }
     .parentContainerSec {
         width: auto;
         height: auto;
+        margin-top: 0%;
     }
     .sudokuBoard {
         width: 90vw;
@@ -161,6 +160,8 @@ button:disabled:hover{
     .numberSelection {
         width: 1.8rem;
         margin-bottom: 5%;
+        width: 1.7rem;
+        
     }
     .instructions {
         display: none;
