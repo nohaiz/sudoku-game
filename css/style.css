@@ -143,11 +143,11 @@ button:disabled:hover{
         min-height: 100vh; 
     }
     button {
-        text-align: center; /* Ensure text is centered horizontally */
-        padding: 10px; /* Adjust padding as needed for adequate space around text */
-        width: 100%; /* Ensure buttons take full width of their container */
+        text-align: center; 
+        padding: 10px; 
+        width: 100%; 
         box-sizing: border-box;
-        }
+    }
     .parentContainerSec {
         width: auto;
         height: auto;
